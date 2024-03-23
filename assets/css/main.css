@@ -1,0 +1,136 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  text-decoration: none;
+}
+
+.category {
+  margin-top: 12px;
+  padding: 8px;
+  background-color: #f8f8f8;
+}
+
+.category__heading {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-top: 8px;
+}
+
+.category__heading h3 {
+    margin-left: 20px;
+}
+
+.category__heading-icon {
+    position: absolute;
+    top: 18px;
+}
+
+.category__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+
+.category__item {
+  width: 100%;
+}
+
+.category__item-link {
+  display: block;
+  padding: 8px 12px;
+  color: #000;
+  border-bottom: 1px solid #ccc;
+}
+
+.category__item-link--active,
+.category__item-link:hover {
+  color: #ff6b6b;
+  text-decoration: none;
+  transform: translateX(6px);
+  transition: all 0.2s ease;
+}
+
+.content {
+  margin-top: 8px;
+}
+
+.product {
+  display: block;
+  margin-top: 6px;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.product:hover {
+  text-decoration: none;
+  color: #000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  transform: translateY(-6px);
+}
+
+.product__img {
+  width: 100%;
+  height: 160px;
+}
+
+.product__name {
+  font-size: 16px;
+  margin-left: 8px;
+}
+
+.product__price {
+  margin-left: 8px;
+}
+
+.product__buy {
+  text-align: center;
+}
+
+.btn {
+    display: block;
+    margin: 8px auto;
+    padding: 8px 16px;
+    color: #fff;
+    background-color: #ff6b6b;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin-top: 20px;
+}
+
+.pagination a:hover {
+  color: #fff;
+  background-color: #ff6b6b;
+  text-decoration: none;
+}
+
+.pagination__prev,
+.pagination__next,
+.pagination__number {
+  margin: 0 8px;
+  padding: 6px 12px;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.pagination__number--active {
+  color: #fff;
+  background-color: #ff6b6b;
+}
