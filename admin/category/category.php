@@ -30,7 +30,16 @@
             </div>
             <div class="panel-body">
                 <?php
-                    $sql = "SELECT * FROM category";
+                    if (isset($_GET['page'])) {
+                        $page = $_GET['page'];
+                    } else {
+                        $page = 1;
+                    }
+                    $total = count(getRows('SELECT * FROM category'));
+                    $limit = 8;
+                    $totalPage = ceil($total / $limit);
+                    $start = ($page - 1) * $limit;
+                    $sql = "SELECT * FROM category LIMIT $start, $limit";
                     $categories = getRows($sql);
                 ?>
                 <table class="table table-bordered">
@@ -58,6 +67,29 @@
                         <?php } ?>
                     </tbody>
                 </table>
+                <div class="pagination">
+                    <?php
+                    if ($page > 1) {
+                    ?>
+                        <a href="index.php?layout=category&page=<?= $page - 1 ?>" class="pagination__prev">
+                            <i class="fa fa-arrow-left"></i>
+                        </a>
+                    <?php } ?>
+
+                    <?php
+                    for ($i = 1; $i <= $totalPage; $i++) {
+                    ?>
+                        <a href="index.php?layout=category&page=<?= $i ?>" class="pagination__number <?= $i == $page ? 'pagination__number--active' : '' ?>"><?= $i ?></a>
+                    <?php } ?>
+
+                    <?php
+                    if ($page < $totalPage) {
+                    ?>
+                        <a href="index.php?layout=category&page=<?= $page + 1 ?>" class="pagination__next">
+                            <i class="fa fa-arrow-right"></i>
+                        </a>
+                    <?php } ?>
+                </div>
             </div>
         </div>
     </div>

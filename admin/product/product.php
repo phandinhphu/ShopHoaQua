@@ -79,7 +79,7 @@ require_once(__DIR__ . '/../../db/database.php');
                     <?php
                     if ($page > 1) {
                     ?>
-                        <a href="index.php?page=<?= $page - 1 ?>" class="pagination__prev">
+                        <a href="index.php?layout=product&page=<?= $page - 1 ?>" class="pagination__prev">
                             <i class="fa fa-arrow-left"></i>
                         </a>
                     <?php } ?>
@@ -87,13 +87,13 @@ require_once(__DIR__ . '/../../db/database.php');
                     <?php
                     for ($i = 1; $i <= $totalPage; $i++) {
                     ?>
-                        <a href="index.php?page=<?= $i ?>" class="pagination__number <?= $i == $page ? 'pagination__number--active' : '' ?>"><?= $i ?></a>
+                        <a href="index.php?layout=product&page=<?= $i ?>" class="pagination__number <?= $i == $page ? 'pagination__number--active' : '' ?>"><?= $i ?></a>
                     <?php } ?>
 
                     <?php
                     if ($page < $totalPage) {
                     ?>
-                        <a href="index.php?page=<?= $page + 1 ?>" class="pagination__next">
+                        <a href="index.php?layout=product&page=<?= $page + 1 ?>" class="pagination__next">
                             <i class="fa fa-arrow-right"></i>
                         </a>
                     <?php } ?>

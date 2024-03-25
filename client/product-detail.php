@@ -1,5 +1,5 @@
 <?php 
-    require_once(__DIR__ . '/db/database.php');
+    require_once('../db/database.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,11 +14,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 
 <body>
     <?php
-    include_once(__DIR__ . '/layout/header.php');
+    include_once('../layout/header.php');
     ?>
 
     <section class="py-5">
@@ -53,7 +54,7 @@
     </section>
 
     <?php 
-    include_once(__DIR__ . '/layout/footer.php');
+    include_once('../layout/footer.php');
     ?>
 </body>
 
