@@ -1,0 +1,43 @@
+* {
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+body > form {
+    width: 600px;
+    padding: 15px;
+    margin: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.input__label {
+    transition: all ease 0.3s;
+    user-select: none;
+    cursor: text;
+    z-index: 1;
+}
+
+.input__text {
+    transform: translateY(30px);
+    border-bottom: 1px solid #ccc;
+}
+
+.active {
+    transform: translateY(-30px);
+}

@@ -7,12 +7,12 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="../client/index.php">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="?modules=client&action=trangchu">Home <span class="sr-only">(current)</span></a>
       </li>
     </ul>
     <div class="navbar-nav navbar__user">
       <span class="navbar-text">
-        Phan Đình Phú
+        <?= $_SESSION['username'] ?>
       </span>
       <ul class="navbar-nav navbar__user-items">
         <li class="nav-item">

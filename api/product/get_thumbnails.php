@@ -1,5 +1,5 @@
 <?php
-require_once('../db/database.php');
+require_once '../../db/database.php';
 
 function getThumbnail() {
     $thumbnails = getRows('SELECT id, thumbnail FROM product');

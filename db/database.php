@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/dbconnect.php');
 
 function query($sql, $data = []) {

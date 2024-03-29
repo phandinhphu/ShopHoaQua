@@ -1,5 +1,10 @@
 <?php
-require_once('../db/database.php');
+session_start();
+if (empty($_SESSION['username'])) {
+    header('Location: ?module=client&action=login');
+    die();
+}
+
 if (isset($_GET['id'])) {
     $class = 'category__item-link--active';
 }
@@ -13,13 +18,14 @@ if (isset($_GET['id'])) {
     <title>Trang Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/grid.css">
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="./modules/client/assets/css/base.css">
+    <link rel="stylesheet" href="./modules/client/assets/css/grid.css">
+    <link rel="stylesheet" href="./modules/client/assets/css/main.css">
 </head>
 
 <body>
     <?php
-    include_once('../layout/header.php');
+    include_once('./modules/layout/header.php');
     ?>
 
     <div class="container">
@@ -39,14 +45,14 @@ if (isset($_GET['id'])) {
                             <?php if (isset($class)) {
                                 $_class = $class;
                             } ?>
-                            <li class="category__item"><a class="category__item-link <?= !isset($_GET['id']) ? 'category__item-link--active' : '' ?>" href="index.php">Tất cả sản phẩm</a></li>
+                            <li class="category__item"><a class="category__item-link <?= !isset($_GET['id']) ? 'category__item-link--active' : '' ?>" href="?modules=client&action=trangchu">Tất cả sản phẩm</a></li>
                             <?php
                             $categories = getRows('SELECT * FROM category');
                             foreach ($categories as $category) {
                             ?>
                                 <li class="category__item"><a class="category__item-link <?=
                                                                                             isset($_GET['id']) && $_GET['id'] == $category['id'] ? 'category__item-link--active' : ''
-                                                                                            ?>" href="index.php?id=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
+                                                                                            ?>" href="?modules=client&action=trangchu&id=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
                             <?php } ?>
                         </ul>
                     </div>
@@ -56,10 +62,10 @@ if (isset($_GET['id'])) {
                     <div class="content">
                         <h3>Sản phẩm</h3>
                         <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn-search my-2 my-sm-0" type="submit">Search</button>
+                            <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn-search my-2 my-sm-0" type="submit" id="search">Search</button>
                         </form>
-                        <div class="row">
+                        <div id="product" class="row">
                             <?php
                             if (isset($_GET['page'])) {
                                 $page = $_GET['page'];
@@ -84,7 +90,7 @@ if (isset($_GET['id'])) {
                             foreach ($products as $product) {
                             ?>
                                 <div class="col c-3">
-                                    <a href="product-detail.php?id=<?= $product['id'] ?>" class="product">
+                                    <a href="?modules=client&action=product-detail&id=<?= $product['id'] ?>" class="product">
                                         <img src=<?= $product['thumbnail'] ?> alt="product" class="product__img">
                                         <h4 class="product__name" style="margin-top: 10px;"><?= $product['title'] ?></h4>
                                         <p class="product__price">Giá: <?= $product['price'] ?>vnd</p>
@@ -100,7 +106,7 @@ if (isset($_GET['id'])) {
                         <?php
                         if ($page > 1) {
                         ?>
-                            <a href="index.php?page=<?= $page - 1 ?>" class="pagination__prev">
+                            <a href="?modules=client&action=trangchu&page=<?= $page - 1 ?>" class="pagination__prev">
                                 <i class="fa fa-arrow-left"></i>
                             </a>
                         <?php } ?>
@@ -108,13 +114,13 @@ if (isset($_GET['id'])) {
                         <?php
                         for ($i = 1; $i <= $totalPage; $i++) {
                         ?>
-                            <a href="index.php?page=<?= $i ?>" class="pagination__number <?= $i == $page ? 'pagination__number--active' : '' ?>"><?= $i ?></a>
+                            <a href="?modules=client&action=trangchu&page=<?= $i ?>" class="pagination__number <?= $i == $page ? 'pagination__number--active' : '' ?>"><?= $i ?></a>
                         <?php } ?>
 
                         <?php
                         if ($page < $totalPage) {
                         ?>
-                            <a href="index.php?page=<?= $page + 1 ?>" class="pagination__next">
+                            <a href="?modules=client&action=trangchu&page=<?= $page + 1 ?>" class="pagination__next">
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         <?php } ?>
@@ -125,7 +131,7 @@ if (isset($_GET['id'])) {
     </div>
 
     <?php
-    include_once('../layout/footer.php');
+    include_once('./modules/layout/footer.php');
     ?>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -138,9 +144,11 @@ if (isset($_GET['id'])) {
             categoryList.classList.toggle('category__list--active');
         });
     </script>
+
+    <!-- Display slide thumbnail -->
     <script>
         function fetchThumbnails() {
-            fetch('../api/get_thumbnail.php')
+            fetch('./api/product/get_thumbnails.php')
                 .then(response => response.json())
                 .then(data => {
                     window.thumbnail = data;
@@ -155,7 +163,7 @@ if (isset($_GET['id'])) {
             window.thumbnail.push(nextThumbnail);
             slideList.innerHTML =
                 `<div class="slide__item">
-                            <a href="product-detail.php?id=${nextThumbnail.id}" class="slide__link">
+                            <a href="?module=client&action=product-detail&id=${nextThumbnail.id}" class="slide__link">
                                 <img src="${nextThumbnail.thumbnail}" alt="slide" class="slide__img">
                             </a>
                         </div>`;
@@ -163,6 +171,43 @@ if (isset($_GET['id'])) {
 
         fetchThumbnails();
     </script>
+    <!-- Display slide thumbnail -->
+
+    <!-- Display search product -->
+    <script>
+        $(function() {
+            $('form').submit(function() {
+                var search = $('[name=search]').val()
+                $.post('./api/product/search_product.php',{
+                    'search': search
+                },function(data) {
+                    var product = $('#product')
+                    var pagination = $('.pagination')
+                    $('.category__item-link').removeClass('category__item-link--active')
+                    product.html('')
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            var item = data[key]
+                            product.append(`
+                                <div class="col c-3">
+                                    <a href="?modules=client&action=product-detail&id=${item.id}" class="product">
+                                        <img src=${item.thumbnail} alt="product" class="product__img">
+                                        <h4 class="product__name" style="margin-top: 10px;">${item.title}</h4>
+                                        <p class="product__price">Giá: ${item.price}vnd</p>
+                                        <div class="product__buy">
+                                            <input type="button" class="btn" value="Mua hàng">
+                                        </div>
+                                    </a>
+                                </div>
+                            `)
+                        }
+                    }
+                })
+                return false;
+            })
+        })
+    </script>
+    <!-- Display search product -->
 </body>
 
 </html>
