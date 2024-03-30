@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (empty($_SESSION['username'])) {
+    header('Location: ?module=client&action=login');
+    die();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

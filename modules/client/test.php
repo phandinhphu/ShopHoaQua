@@ -61,82 +61,16 @@ if (isset($_GET['id'])) {
                 <div class="col c-9">
                     <div class="content">
                         <h3>Sản phẩm</h3>
-                        <form action="?module=client&action=trangchu" method="get" class="form-inline my-2 my-lg-0">
+                        <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn-search my-2 my-sm-0" type="submit" id="search">Search</button>
                         </form>
                         <div id="product" class="row">
-                            <?php
-                            if (isset($_GET['page'])) {
-                                $page = $_GET['page'];
-                            } else {
-                                $page = 1;
-                            }
-                            $limit = 12;
-                            if (isset($_GET['id'])) {
-                                $id = $_GET['id'];
-                                $total = count(getRows("SELECT * FROM product WHERE id_category = $id"));
-                                $totalPage = ceil($total / $limit);
-                                $start = ($page - 1) * $limit;
-                                $products = getRows("SELECT * FROM product 
-                                                    WHERE id_category = $id
-                                                    LIMIT $start, $limit");
-                            } elseif (isset($_GET['search'])) {
-                                $search = $_GET['search'];
-                                $total = count(getRows("SELECT * FROM product WHERE title LIKE '%$search%'"));
-                                $totalPage = ceil($total / $limit);
-                                $start = ($page - 1) * $limit;
-                                $products = getRows("SELECT * FROM product WHERE title LIKE '%$search%' LIMIT $start, $limit");
-                            }
-                            else {
-                                $total = count(getRows('SELECT * FROM product'));
-                                $totalPage = ceil($total / $limit);
-                                $start = ($page - 1) * $limit;
-                                $products = getRows("SELECT * FROM product LIMIT $start, $limit");
-                            }
-                            foreach ($products as $product) {
-                            ?>
-                                <div class="col c-3">
-                                    <a href="?modules=client&action=product-detail&id=<?= $product['id'] ?>" class="product">
-                                        <img src=<?= $product['thumbnail'] ?> alt="product" class="product__img">
-                                        <h4 class="product__name" style="margin-top: 10px;"><?= $product['title'] ?></h4>
-                                        <p class="product__price">Giá: <?= $product['price'] ?>vnd</p>
-                                        <div class="product__buy">
-                                            <input type="button" class="btn" value="Mua hàng">
-                                        </div>
-                                    </a>
-                                </div>
-                            <?php } ?>
+                            
                         </div>
                     </div>
                     <div class="pagination">
-                        <?php
-                        if ($page > 1) {
-                        ?>
-                            <a href="?modules=client&action=trangchu&page=<?= $page - 1 ?>
-                            <?= isset($_GET['id']) ? '&id='.$_GET['id'] : '' ?>
-                            <?= isset($_GET['search']) ? '&search='.$_GET['search'] : '' ?>" class="pagination__prev">
-                                <i class="fa fa-arrow-left"></i>
-                            </a>
-                        <?php } ?>
-
-                        <?php
-                        for ($i = 1; $i <= $totalPage; $i++) {
-                        ?>
-                            <a href="?modules=client&action=trangchu&page=<?= $i ?>
-                            <?= isset($_GET['id']) ? '&id='.$_GET['id'] : '' ?>
-                            <?= isset($_GET['search']) ? '&search='.$_GET['search'] : '' ?>" class="pagination__number <?= $i == $page ? 'pagination__number--active' : '' ?>"><?= $i ?></a>
-                        <?php } ?>
-
-                        <?php
-                        if ($page < $totalPage) {
-                        ?>
-                            <a href="?modules=client&action=trangchu&page=<?= $page + 1 ?>
-                            <?= isset($_GET['id']) ? '&id='.$_GET['id'] : '' ?>
-                            <?= isset($_GET['search']) ? '&search='.$_GET['search'] : '' ?>" class="pagination__next">
-                                <i class="fa fa-arrow-right"></i>
-                            </a>
-                        <?php } ?>
+                        
                     </div>
                 </div>
             </div>
@@ -185,6 +119,107 @@ if (isset($_GET['id'])) {
         fetchThumbnails();
     </script>
     <!-- Display slide thumbnail -->
+
+    <!-- Display search product -->
+    <script>
+        var currentPage = 1;
+        var perPage = 12;
+        function fetchProduct() {
+            $.ajax({
+                url: './api/product/get_all_product.php',
+                method: 'GET',
+                data: {
+                    'action': 'filter',
+                    'currentPage': currentPage,
+                    'perPage': perPage
+                },
+                success: function(data) {
+                    var product = $('#product')
+                    var pagination = $('.pagination')
+                    product.html('')
+                    for (var key in data.products) {
+                        if (data.products.hasOwnProperty(key)) {
+                            var item = data.products[key]
+                            product.append(`
+                                <div class="col c-3">
+                                    <a href="?modules=client&action=product-detail&id=${item.id}" class="product">
+                                        <img src=${item.thumbnail} alt="product" class="product__img">
+                                        <h4 class="product__name" style="margin-top: 10px;">${item.title}</h4>
+                                        <p class="product__price">Giá: ${item.price}vnd</p>
+                                        <div class="product__buy">
+                                            <input type="button" class="btn" value="Mua hàng">
+                                        </div>
+                                    </a>
+                                </div>
+                            `)
+                        }
+                    }
+                    pagination.html('')
+                    for (var i = 1; i <= data.total; i++) {
+                        pagination.append(`
+                            <button class="pagination__number" data-page="${i}">${i}</button>
+                        `)
+                    }
+                }
+            })
+        }
+
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('pagination__number')) {
+                currentPage = e.target.getAttribute('data-page')
+                fetchProduct()
+            }
+        })
+
+        fetchProduct()
+    </script>
+
+    <script>
+        $(function() {
+            var currentPage = 1;
+            
+
+            $('form').submit(function() {
+                var search = $('[name=search]').val()
+                $.get('./api/product/get_all_product.php',{
+                    'action': 'search',
+                    'search': search,
+                    'currentPage': currentPage,
+                    'perPage': 12
+                },function(data) {
+                    var product = $('#product')
+                    var pagination = $('.pagination')
+                    $('.category__item-link').removeClass('category__item-link--active')
+                    product.html('')
+                    for (var key in data.products) {
+                        if (data.products.hasOwnProperty(key)) {
+                            var item = data.products[key]
+                            product.append(`
+                                <div class="col c-3">
+                                    <a href="?modules=client&action=product-detail&id=${item.id}" class="product">
+                                        <img src=${item.thumbnail} alt="product" class="product__img">
+                                        <h4 class="product__name" style="margin-top: 10px;">${item.title}</h4>
+                                        <p class="product__price">Giá: ${item.price}vnd</p>
+                                        <div class="product__buy">
+                                            <input type="button" class="btn" value="Mua hàng">
+                                        </div>
+                                    </a>
+                                </div>
+                            `)
+                        }
+                    }
+                    pagination.html('')
+                    for (var i = 1; i <= data.total; i++) {
+                        pagination.append(`
+                            <button class="pagination__number " data-page="${i}">${i}</button>
+                        `)
+                    }
+                })
+                return false;
+            })
+        })
+    </script>
+    <!-- Display search product -->
 </body>
 
 </html>
