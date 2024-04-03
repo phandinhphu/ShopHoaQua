@@ -9,6 +9,11 @@
       <li class="nav-item active">
         <a class="nav-link" href="?modules=client&action=trangchu">Home <span class="sr-only">(current)</span></a>
       </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="?modules=client&action=giohang">Giỏ hàng
+            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+      </li>
     </ul>
     <div class="navbar-nav navbar__user">
       <span class="navbar-text">

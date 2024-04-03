@@ -13,6 +13,17 @@ function query($sql, $data = []) {
     return $stmt;
 }
 
+function queryAndGetId($sql, $data = []) {
+    global $conn;
+    $stmt = $conn->prepare($sql);
+    if ($data) {
+        $stmt->execute($data);
+    } else {
+        $stmt->execute();
+    }
+    return $conn->lastInsertId();
+}
+
 function insert($table, $data) {
     $key = array_keys($data);
     $property = implode(',', $key);
@@ -21,6 +32,16 @@ function insert($table, $data) {
     }, $key));
     $sql = "INSERT INTO $table($property) VALUES($value)";
     query($sql, $data);
+}
+
+function insertAndGetId($table, $data) {
+    $key = array_keys($data);
+    $property = implode(',', $key);
+    $value = implode(',',array_map(function($v) {
+        return ":$v";
+    }, $key));
+    $sql = "INSERT INTO $table($property) VALUES($value)";
+    return queryAndGetId($sql, $data);
 }
 
 function update($table, $data = [], $where = []) {

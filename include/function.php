@@ -35,3 +35,23 @@ function sendMail($to, $subject, $message)
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 }
+
+function taoDonHang($maDH, $total, $pttt, $name, $address, $email, $phone) {
+    $dataEmail = [
+        'email' => $email
+    ];
+    $idUser = getRow('SELECT id FROM users WHERE email = :email', $dataEmail)['id'];
+    $data = [
+        'maDH' => $maDH,
+        'tongDH' => $total,
+        'phuongThucTT' => $pttt,
+        'idUser' => $idUser,
+        'name' => $name,
+        'address' => $address,
+        'email' => $email,
+        'phone' => $phone,
+        'status' => 0
+    ];
+    $idDH = insertAndGetId('orders', $data);
+    return $idDH;
+}

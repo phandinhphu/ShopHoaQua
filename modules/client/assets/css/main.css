@@ -4,6 +4,12 @@ body {
   min-height: 100vh;
 }
 
+.navbar {
+  position: fixed;
+  width: 100%;
+  z-index: 999999;
+}
+
 .container {
   flex: 1;
 }
@@ -87,28 +93,8 @@ body {
 }
 
 .slide {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  list-style: none;
   margin: 0;
   padding: 0;
-}
-
-.slide__item {
-  width: 600px;
-  height: 400px;
-  margin: 8px;
-  padding: 8px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  transition: all 0.2s ease;
-}
-
-.slide__img {
-  width: 100%;
-  height: 100%;
 }
 
 .content h3 {
