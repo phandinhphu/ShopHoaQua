@@ -46,6 +46,8 @@
                                 include 'category/add.php';
                             } else if ($layout == 'addproduct') {
                                 include 'product/add.php';
+                            } else if ($layout == 'user') {
+                                include 'user/user.php';
                             }
                         ?>
                     </div>

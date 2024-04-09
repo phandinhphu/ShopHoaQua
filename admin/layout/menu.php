@@ -12,7 +12,7 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="profile.html" aria-expanded="false">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="../admin/index.php?layout=user" aria-expanded="false">
             <i class="fa fa-user" aria-hidden="true"></i>
             <span class="hide-menu">User</span>
           </a>

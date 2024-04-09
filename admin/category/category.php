@@ -58,7 +58,7 @@
                                 <td><?= $category['id'] ?></td>
                                 <td><?= $category['name'] ?></td>
                                 <td>
-                                    <a href="category/add.php?id=<?= $category['id'] ?>" class="btn btn-warning">Sửa</a>
+                                    <a href="../admin/index.php?layout=addcategory&id=<?= $category['id'] ?>" class="btn btn-warning">Sửa</a>
                                 </td>
                                 <td>
                                     <button class="btn btn-danger" onclick="deleteCategory(<?=$category['id']?>)">Xóa</button>

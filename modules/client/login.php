@@ -2,6 +2,10 @@
 session_start();
 require_once './db/database.php';
 
+if (!empty($_SESSION['username'])) {
+    header('Location: ?module=client&action=trangchu');
+    exit();
+}
 
 $error = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

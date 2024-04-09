@@ -2,10 +2,9 @@
 require_once '../../db/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $sql = "SELECT * FROM user";
+    $sql = "SELECT * FROM users";
     $users = getRows($sql);
     if ($users) {
-        header('Content-Type: application/json');
         $data = [
             'status' => '1',
             'data' => $users
@@ -16,5 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'message' => 'Not found data user'
         ];
     }
+    header('Content-Type: application/json');
     echo json_encode($data);
 }

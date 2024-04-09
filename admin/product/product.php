@@ -66,7 +66,7 @@ require_once(__DIR__ . '/../../db/database.php');
                                 <td><?= $product['category_name'] ?></td>
                                 <td><?= $product['updated_at'] ?></td>
                                 <td>
-                                    <a href="category/add.php?id=<?= $product['id'] ?>" class="btn btn-warning">Sửa</a>
+                                    <a href="../admin/index.php?layout=addproduct&id=<?= $product['id'] ?>" class="btn btn-warning">Sửa</a>
                                 </td>
                                 <td>
                                     <button class="btn btn-danger" onclick="deleteProduct(<?= $product['id'] ?>)">Xóa</button>

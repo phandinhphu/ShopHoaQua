@@ -59,10 +59,6 @@ if (isset($_GET['id'])) {
             <div class="col-md-9 col-12 col-sm-12">
                 <div class="content">
                     <h3>Sản phẩm</h3>
-                    <form action="?module=client&action=trangchu" method="get" class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn-search my-2 my-sm-0" type="submit" id="search">Search</button>
-                    </form>
                     <div id="product" class="row">
                         <?php
                         if (isset($_GET['page'])) {
@@ -79,12 +75,6 @@ if (isset($_GET['id'])) {
                             $products = getRows("SELECT * FROM product 
                                                     WHERE id_category = $id
                                                     LIMIT $start, $limit");
-                        } elseif (isset($_GET['search'])) {
-                            $search = $_GET['search'];
-                            $total = count(getRows("SELECT * FROM product WHERE title LIKE '%$search%'"));
-                            $totalPage = ceil($total / $limit);
-                            $start = ($page - 1) * $limit;
-                            $products = getRows("SELECT * FROM product WHERE title LIKE '%$search%' LIMIT $start, $limit");
                         } else {
                             $total = count(getRows('SELECT * FROM product'));
                             $totalPage = ceil($total / $limit);
@@ -146,13 +136,6 @@ if (isset($_GET['id'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script>
-        var categoryHeading = document.querySelector('.category__heading');
-        var categoryList = document.querySelector('.category__list');
-        categoryHeading.addEventListener('click', function() {
-            categoryList.classList.toggle('category__list--active');
-        });
-    </script>
 
     <!-- Display slide thumbnail -->
     <script>
