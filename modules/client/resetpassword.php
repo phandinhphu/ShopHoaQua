@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form id="form-reset" action="?module=client&action=updateProfile" method="post">
+            <form id="form-reset">
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" class="form-control">

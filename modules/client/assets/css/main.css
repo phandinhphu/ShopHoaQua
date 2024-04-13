@@ -10,6 +10,120 @@ body {
   z-index: 999999;
 }
 
+.group__search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 30px;
+  padding: 4px 0 4px 8px;
+  margin: 0 12px;
+}
+
+.input__search {
+  border: none;
+  outline: none;
+  padding: 0px;
+  width: 0;
+  transition: all 0.25s ease-in-out;
+}
+
+.input__search--active {
+  width: 300px;
+  padding: 4px 8px;
+  border-right: 1px solid #ccc;
+}
+
+.input__search--active ~ .btn__search {
+  display: block;
+}
+
+.btn__search {
+  display: none;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 4px;
+}
+
+.btn__search:hover {
+  background-color: #ff4d4d;
+}
+
+.search__icon {
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+.search__icon:hover {
+  color: #ff6b6b;
+}
+
+.slide {
+  position: relative;
+  margin: 0 auto !important;
+  padding: 56px 0 !important;
+  width: 1000px;
+  overflow: hidden;
+}
+
+.slide__list {
+  display: flex;
+  margin: 0 auto;
+  transition: 0.5s;
+}
+
+.slide__img {
+  min-width: 100%;
+  height: 580px;
+}
+
+.btn__slide {
+  font-size: 40px;
+  color: #999;
+  position: absolute;
+  top: 50%;
+  padding: 8px;
+  transform: translateY(-50%);
+  transition: 0.5s;
+}
+
+.btn__slide:hover {
+  cursor: pointer;
+  color: #ff6b6b;
+}
+
+.btn__left {
+  left: 0;
+}
+
+.btn__right {
+  right: 0;
+}
+
+.index__img {
+  position: absolute;
+  bottom: 60px;
+  display: flex;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.index__item {
+  border: 2px solid #ccc;
+  padding: 8px;
+  margin: 3px;
+  border-radius: 50%;
+}
+
+.active__slide {
+  background-color: #ff6b6b;
+}
+
 .container {
   flex: 1;
 }
@@ -229,4 +343,29 @@ body {
   text-decoration: none;
   background-color: #ff6b6b;
   color: #fff;
+}
+
+/* Footer */
+.contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  list-style: none;
+}
+
+.contact__item {
+  margin: 0 8px;
+}
+
+.contact__item-icon {
+  display: block;
+  color: #ccc;
+  font-size: 24px;
+  padding: 8px 12px;
+}
+
+.contact__item-icon:hover {
+  text-decoration: none;
+  color: #ff6b6b;
 }

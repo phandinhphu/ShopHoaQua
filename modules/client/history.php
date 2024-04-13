@@ -13,6 +13,7 @@ if (empty($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lịch sử mua hàng</title>
+    <link rel="shortcut icon" href="https://th.bing.com/th/id/R.74bff8ec53bb5bc71046aaa4a21fe9a5?rik=3d39%2f638LB5vog&pid=ImgRaw&r=0" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="./modules/client/assets/css/base.css">
@@ -90,7 +91,6 @@ if (empty($_SESSION['username'])) {
                             <th scope="col">Mã dơn hàng</th>
                             <th scope="col">Tổng tiền</th>
                             <th scope="col">Tên người nhận</th>
-                            <th scope="col">Email</th>
                             <th scope="col">Địa chỉ</th>
                             <th scope="col">Phone</th>
                             <th scope="col">Xem chi tiết</th>
@@ -112,7 +112,6 @@ if (empty($_SESSION['username'])) {
                                 <th scope="row"><?= $order['maDH'] ?></th>
                                 <td><?= number_format($order['tongDH']) ?> VNĐ</td>
                                 <td><?= $order['name'] ?></td>
-                                <td><?= $order['email'] ?></td>
                                 <td><?= $order['address'] ?></td>
                                 <td><?= $order['phone'] ?></td>
                                 <td><span class="jsDetail" data-id="<?= $order['id'] ?>">Chi tiết</span></td>
@@ -163,6 +162,7 @@ if (empty($_SESSION['username'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="./modules/client/assets/js/main.js"></script>
     <script>
         document.querySelectorAll('.jsDetail').forEach(item => {
             item.addEventListener('click', function() {

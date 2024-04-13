@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tìm sản phẩm</title>
+    <link rel="shortcut icon" href="https://th.bing.com/th/id/R.74bff8ec53bb5bc71046aaa4a21fe9a5?rik=3d39%2f638LB5vog&pid=ImgRaw&r=0" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="./modules/client/assets/css/base.css">
@@ -55,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 <form method="get">
                     <input type="hidden" name="module" value="client">
                     <input type="hidden" name="action" value="search_product">
-                    <select name="sort" onchange="this.form.submit()">
+                    <select id="sortSelect" name="sort">
                         <option value="">Sort By</option>
                         <option value="price_asc">Price Low to High</option>
                         <option value="price_desc">Price High to Low</option>
@@ -69,38 +70,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         $sort = $_GET['sort'];
                         switch ($sort) {
                             case 'price_asc':
-                                usort($products, function($a, $b) {
+                                usort($products, function ($a, $b) {
                                     return $a['price'] - $b['price'];
                                 });
                                 break;
                             case 'price_desc':
-                                usort($products, function($a, $b) {
+                                usort($products, function ($a, $b) {
                                     return $b['price'] - $a['price'];
                                 });
                                 break;
                             case 'title_asc':
-                                usort($products, function($a, $b) {
+                                usort($products, function ($a, $b) {
                                     return $a['title'] <=> $b['title'];
                                 });
                                 break;
                             case 'title_desc':
-                                usort($products, function($a, $b) {
+                                usort($products, function ($a, $b) {
                                     return $b['title'] <=> $a['title'];
                                 });
                                 break;
                         }
                     }
-                    foreach ($products as $product) {
+                    if (count($products) > 0) {
+                        foreach ($products as $product) {
                     ?>
-                        <div class="col-xl-3 col-md-4 col-6 col-sm-6">
-                            <a href="?modules=client&action=product_detail&id=<?= $product['id'] ?>" class="product">
-                                <img src=<?= $product['thumbnail'] ?> alt="product" class="product__img">
-                                <h4 class="product__name" style="margin-top: 10px;"><?= $product['title'] ?></h4>
-                                <p class="product__price">Giá: <?= $product['price'] ?>vnd</p>
-                                <div class="product__buy">
-                                    <input type="button" class="btn" value="Mua hàng">
-                                </div>
-                            </a>
+                            <div class="col-xl-3 col-md-4 col-6 col-sm-6">
+                                <a href="?modules=client&action=product_detail&id=<?= $product['id'] ?>" class="product">
+                                    <img src=<?= $product['thumbnail'] ?> alt="product" class="product__img">
+                                    <h4 class="product__name" style="margin-top: 10px;"><?= $product['title'] ?></h4>
+                                    <p class="product__price">Giá: <?= $product['price'] ?>vnd</p>
+                                    <div class="product__buy">
+                                        <input type="button" class="btn" value="Mua hàng">
+                                    </div>
+                                </a>
+                            </div>
+                        <?php }
+                    } else { ?>
+                        <div class="col-xl-12 col-md-12 col-12 col-sm-12">
+                            <h1 align="center" style="margin-top: 20px;">Không tìm thấy sản phẩm</h1>
                         </div>
                     <?php } ?>
                 </div>
@@ -130,6 +137,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <?php
     include_once './modules/layout/footer.php';
     ?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="./modules/client/assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sortSelect = document.getElementById('sortSelect');
+
+            sortSelect.addEventListener('change', () => {
+                const selectValue = sortSelect.value;
+                var currentURL = window.location.href;
+
+                if (currentURL.indexOf('sort=') === -1) {
+                    if (currentURL.indexOf('?') !== -1) {
+                        currentURL += `&sort=${selectValue}`;
+                    } else {
+                        currentURL += `?sort=${selectValue}`;
+                    }
+                } else {
+                    currentURL = currentURL.replace(/(sort=)[^\&]+/, `$1${selectValue}`);
+                }
+                window.location.href = currentURL;
+            });
+        });
+    </script>
 </body>
 
 </html>

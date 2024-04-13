@@ -26,13 +26,18 @@
       </li>
     </ul>
 
+    
     <form class="form-inline my-2 my-lg-0" method="get">
       <input type="hidden" name="module" value="client">
       <input type="hidden" name="action" value="search_product">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <div class="group__search">
+        <input class="input__search" type="search" placeholder="Search" aria-label="Search" name="keyword">
+        <button class="btn__search my-2 my-sm-0" type="submit">Search</button>
+        <i class="search__icon fa fa-search" aria-hidden="true"></i>
+      </div>
     </form>
-
+    
+    
     <div class="navbar-nav navbar__user">
       <span class="navbar-text">
         <?= $_SESSION['username'] ?>

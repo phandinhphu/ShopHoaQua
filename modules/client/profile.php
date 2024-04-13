@@ -12,6 +12,7 @@ if (empty($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    <link rel="shortcut icon" href="https://th.bing.com/th/id/R.74bff8ec53bb5bc71046aaa4a21fe9a5?rik=3d39%2f638LB5vog&pid=ImgRaw&r=0" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="./modules/client/assets/css/base.css">
@@ -72,11 +73,14 @@ if (empty($_SESSION['username'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="./modules/client/assets/js/main.js"></script>
     <script>
         $(function() {
             $('#form-reset').submit(function(e) {
                 var password = $('#password').val();
                 var rpassword = $('#rpassword').val();
+                console.log(password);
+                console.log(rpassword);
                 if (password != rpassword) {
                     alert('Mật khẩu không trùng khớp');
                     e.preventDefault();

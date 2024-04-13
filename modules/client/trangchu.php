@@ -16,6 +16,7 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang Home</title>
+    <link rel="shortcut icon" href="https://th.bing.com/th/id/R.74bff8ec53bb5bc71046aaa4a21fe9a5?rik=3d39%2f638LB5vog&pid=ImgRaw&r=0" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="./modules/client/assets/css/base.css">
@@ -29,6 +30,16 @@ if (isset($_GET['id'])) {
     ?>
 
     <div class="slide">
+        <div class="slide__list"></div>
+        <div class="btns">
+            <div class="btn__left btn__slide">
+                <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>
+            </div>
+            <div class="btn__right btn__slide">
+                <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="index__img"></div>
     </div>
 
     <div class="container">
@@ -137,38 +148,88 @@ if (isset($_GET['id'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-    <!-- Display slide thumbnail -->
+    <script src="./modules/client/assets/js/main.js"></script>
+
     <script>
-        function fetchThumbnails() {
-            fetch('./api/product/get_thumbnails.php')
-                .then(response => response.json())
-                .then(data => {
-                    window.thumbnail = data;
-                    displayNextThumbnail();
-                    setInterval(displayNextThumbnail, 5000);
+        fetch('./api/product/get_thumbnails.php')
+            .then(response => response.json())
+            .then(data => {
+                const slideList = document.querySelector('.slide__list');
+                const indexImg = document.querySelector('.index__img');
+                let htmlImg = data.map(function(thumbnails) {
+                    return `
+                    <img src="${thumbnails.thumbnail}" alt="slide" class="slide__img">
+                    `;
+                }).join('');
+
+                let htmlIdxImg = data.map(function(thumbnails) {
+                    return `
+                    <div class="index__item"></div>
+                    `;
+                }).join('');
+
+                slideList.innerHTML = htmlImg;
+                indexImg.innerHTML = htmlIdxImg;
+
+                const imgs = document.querySelectorAll('.slide__img');
+                const length = imgs.length;
+                const btnLeft = document.querySelector('.btn__left');
+                const btnRight = document.querySelector('.btn__right');
+                const idxImgs = document.querySelectorAll('.index__item');
+                idxImgs[0].classList.add('active__slide');
+                
+                let current = 0;
+
+                const handleChangeSlide = () => {
+                    if (current == length - 1) {
+                        current = 0;
+                        slideList.style.transform = `translateX(0px)`;
+                        idxImgs.forEach(idxImg => {
+                            idxImg.classList.remove('active__slide');
+                        })
+                        idxImgs[current].classList.add('active__slide');
+                    } else {
+                        ++current;
+                        let width = imgs[0].offsetWidth;
+                        slideList.style.transform = `translateX(${width * -1 * current}px)`;
+                        idxImgs.forEach(idxImg => {
+                            idxImg.classList.remove('active__slide');
+                        })
+                        idxImgs[current].classList.add('active__slide');
+                    }
+                };
+
+                let handleInterval = setInterval(handleChangeSlide, 4000);
+
+                btnRight.addEventListener('click', () => {
+                    clearInterval(handleInterval);
+                    handleChangeSlide();
+                    handleInterval = setInterval(handleChangeSlide, 4000);
                 });
-        }
 
-        function displayNextThumbnail() {
-            var slideList = document.querySelector('.slide');
-            var navbarHeader = document.querySelector('.navbar__header');
-            var nextThumbnail = window.thumbnail.shift();
-            window.thumbnail.push(nextThumbnail);
-            slideList.setAttribute('style', `
-                    background-image: url(${nextThumbnail.thumbnail});
-                    background-size: cover;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-attachment: fixed;
-                    margin-top: 56px;
-                    width: 100%;
-                    height: 100vh;
-                    `);
-        }
-
-        fetchThumbnails();
+                btnLeft.addEventListener('click', () => {
+                    clearInterval(handleInterval);
+                    if (current == 0) {
+                        current = length - 1;
+                        let width = imgs[0].offsetWidth;
+                        slideList.style.transform = `translateX(${width * -1 * current}px)`;
+                        idxImgs.forEach(idxImg => {
+                            idxImg.classList.remove('active__slide');
+                        })
+                        idxImgs[current].classList.add('active__slide');
+                    } else {
+                        --current;
+                        let width = imgs[0].offsetWidth;
+                        slideList.style.transform = `translateX(${width * -1 * current}px)`;
+                        idxImgs.forEach(idxImg => {
+                            idxImg.classList.remove('active__slide');
+                        })
+                        idxImgs[current].classList.add('active__slide');
+                    }
+                    handleInterval = setInterval(handleChangeSlide, 4000);
+                });
+            });
     </script>
-    <!-- Display slide thumbnail -->
 </body>
 
 </html>
