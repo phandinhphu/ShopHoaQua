@@ -15,11 +15,11 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" value="<?= $user['email'] ?>">
+                    <input type="email" name="email" id="email" class="form-control" value="<?= $user['email'] ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="text" name="phone" id="phone" class="form-control" value="<?= $user['phone'] ?>">
+                    <input type="text" name="phone" id="phone" class="form-control" value="<?= $user['phone'] ?>" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>

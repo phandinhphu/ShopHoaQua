@@ -44,7 +44,7 @@ if (isset($_GET['id'])) {
 
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-0 col-sm-0">
+            <div class="col-md-3 col-0 col-sm-3">
                 <div class="category hide-on-mobile">
                     <div class="category__heading">
                         <i class="category__heading-icon fa fa-list"></i>
@@ -67,7 +67,7 @@ if (isset($_GET['id'])) {
                 </div>
             </div>
 
-            <div class="col-md-9 col-12 col-sm-12">
+            <div class="col-md-9 col-12 col-sm-9">
                 <div class="content">
                     <h3>Sản phẩm</h3>
                     <div id="product" class="row">
@@ -94,7 +94,7 @@ if (isset($_GET['id'])) {
                         }
                         foreach ($products as $product) {
                         ?>
-                            <div class="col-xl-3 col-md-4 col-6 col-sm-6">
+                            <div class="col-xl-3 col-6 col-sm-4">
                                 <a href="?modules=client&action=product_detail&id=<?= $product['id'] ?>" class="product">
                                     <img src=<?= $product['thumbnail'] ?> alt="product" class="product__img">
                                     <h4 class="product__name" style="margin-top: 10px;"><?= $product['title'] ?></h4>
@@ -158,7 +158,7 @@ if (isset($_GET['id'])) {
                 const indexImg = document.querySelector('.index__img');
                 let htmlImg = data.map(function(thumbnails) {
                     return `
-                    <img src="${thumbnails.thumbnail}" alt="slide" class="slide__img">
+                    <img srcset="${thumbnails.thumbnail} 2x" alt="slide" class="slide__img">
                     `;
                 }).join('');
 

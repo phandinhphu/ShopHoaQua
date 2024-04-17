@@ -1,43 +1,102 @@
 * {
-    outline: none;
-    border: none;
-    text-decoration: none;
+  outline: none;
+  border: none;
+  text-decoration: none;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url(https://png.pngtree.com/thumb_back/fw800/background/20230516/pngtree-tropical-fruits-at-the-beach-wallpapers-image_2567524.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 body > form {
-    width: 600px;
-    padding: 15px;
-    margin: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
+  width: 600px;
+  padding: 15px;
+  margin: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .input__label {
-    transition: all ease 0.3s;
-    user-select: none;
-    cursor: text;
-    z-index: 1;
+  transition: all linear 0.3s;
+  padding: 0 4px;
+  user-select: none;
+  cursor: text;
+  z-index: 1;
+}
+
+.input__label i {
+  margin-right: 5px;
 }
 
 .input__text {
-    transform: translateY(30px);
-    border-bottom: 1px solid #ccc;
+  transform: translateY(30px);
+  padding: 12px;
+  border-bottom: 1px solid #ccc;
+  background-color: transparent;
 }
 
 .active {
-    transform: translateY(-30px);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #ff6b6b;
+  color: white;
+  border-radius: 16px;
+  margin: 0;
+  width: 32%;
+  left: 12px;
+  transform: translateY(-33px);
+}
+
+.btn-primary {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #ff4d4d;
+}
+
+.form__link {
+  color: #ff6b6b;
+}
+
+.form__link:hover {
+  color: #ff4d4d;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 46.1875em) {
+  body {
+    background-image: url(https://png.pngtree.com/background/20210710/original/pngtree-fruit-and-vegetable-fruit-background-template-picture-image_1032040.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  body > form {
+    width: 100%;
+  }
 }

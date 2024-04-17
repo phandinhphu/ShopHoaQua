@@ -30,9 +30,9 @@ function sendMail($to, $subject, $message)
         $mail->Body    = $message;
 
         $mail->send();
-        echo 'Gửi thành công';
+        return true;
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        return false;
     }
 }
 
@@ -50,6 +50,7 @@ function taoDonHang($maDH, $total, $pttt, $name, $address, $email, $phone) {
         'address' => $address,
         'email' => $email,
         'phone' => $phone,
+        'orderDate' => date('Y-m-d H:i:s'),
         'status' => 0
     ];
     $idDH = insertAndGetId('orders', $data);

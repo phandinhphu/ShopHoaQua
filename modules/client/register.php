@@ -44,11 +44,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'activeToken' => md5($email).time(),
             'createdAt' => date('Y-m-d H:i:s')
         ];
-        $result = insert('users', $data);
-        echo $result;
-        var_dump($result);
-        if ($result == NULL) {
-            header('Location: ?module=client&action=login');
+        $to = $email;
+        $subject = 'Kích hoạt tài khoản';
+        $message = 'Click vào link sau để kích hoạt tài khoản: <a href="http://localhost/ShopHoaQua/?module=client&action=active&token='.$data['activeToken'].'">Kích hoạt</a>';
+
+        $rs = sendMail($to, $subject, $message);
+        if ($rs) {
+            setFlashData('success', 'Đăng ký thành công, vui lòng kiểm tra email để kích hoạt tài khoản');
+            $result = insert('users', $data);
+            if ($result == NULL) {
+                header('Location: ?module=client&action=login');
+            } else {
+                $error['register'] = 'Đăng ký thất bại';
+            }
         } else {
             $error['register'] = 'Đăng ký thất bại';
         }
@@ -135,20 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </form>
 
-    <script>
-        var inputLabels = document.querySelectorAll('.input__label');
-        var inputTexts = document.querySelectorAll('.input__text');
-        inputTexts.forEach((inputText, index) => {
-            inputText.addEventListener('focus', () => {
-                inputLabels[index].classList.add('active');
-            });
-            inputText.addEventListener('blur', () => {
-                if (inputText.value === '') {
-                    inputLabels[index].classList.remove('active');
-                }
-            });
-        });
-    </script>
+    <script src="./modules/client/assets/js/login_register.js"></script>
 </body>
 
 </html>

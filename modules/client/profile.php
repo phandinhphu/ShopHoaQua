@@ -77,28 +77,30 @@ if (empty($_SESSION['username'])) {
     <script>
         $(function() {
             $('#form-reset').submit(function(e) {
-                var password = $('#password').val();
-                var rpassword = $('#rpassword').val();
-                console.log(password);
-                console.log(rpassword);
+                e.preventDefault();
+                let oldPassword = $('#old-password').val();
+                let password = $('#password').val();
+                let rpassword = $('#rpassword').val();
+
                 if (password != rpassword) {
-                    alert('Mật khẩu không trùng khớp');
-                    e.preventDefault();
+                    document.querySelector('.alert').classList.toggle('alert-danger');
+                    document.querySelector('.alert strong').innerHTML = 'Mật khẩu không khớp nhau';
                 } else {
                     $.ajax({
                         url: 'http://localhost/ShopHoaQua/modules/auth/reset_password.php',
                         type: 'post',
                         data: {
+                            'oldPassword': oldPassword,
                             'password': password,
                             'rpassword': rpassword
                         },
                         success: function(data) {
                             if (data.status == 1) {
-                                document.querySelector('.alert').classList.add('alert-success');
-                                document.querySelector('.alert strong').innerHTML = data.message;
+                                document.querySelector('.alert').classList.toggle('alert-success');
+                                document.querySelector('.alert strong').innerHTML = data.msg;
                             } else {
-                                document.querySelector('.alert').classList.add('alert-danger');
-                                document.querySelector('.alert strong').innerHTML = data.message;
+                                document.querySelector('.alert').classList.toggle('alert-danger');
+                                document.querySelector('.alert strong').innerHTML = data.msg;
                             }
                         }
                     });
@@ -106,27 +108,46 @@ if (empty($_SESSION['username'])) {
             });
 
             $('#form-profile').submit(function(e) {
+                e.preventDefault();
                 let username = $('#username').val();
                 let email = $('#email').val();
                 let phone = $('#phone').val();
-                $.ajax({
-                    url: 'http://localhost/ShopHoaQua/modules/auth/update_user_info.php',
-                    type: 'post',
-                    data: {
-                        'username': username,
-                        'email': email,
-                        'phone': phone
-                    },
-                    success: function(data) {
-                        if (data.status == 1) {
-                            document.querySelector('.alert').classList.add('alert-success');
-                            document.querySelector('.alert strong').innerHTML = data.message;
-                        } else {
-                            document.querySelector('.alert').classList.add('alert-danger');
-                            document.querySelector('.alert strong').innerHTML = data.message;
+
+                const phoneRegex = /^(0)[0-9]{9}$/;
+
+                if (!phone.match(phoneRegex)) {
+                    document.querySelector('.alert').classList.toggle('alert-danger');
+                    document.querySelector('.alert strong').innerHTML = 'Số điện thoại không hợp lệ';
+                } else {
+                    $.ajax({
+                        url: 'http://localhost/ShopHoaQua/modules/auth/update_user_info.php',
+                        type: 'post',
+                        data: {
+                            'username': username,
+                            'email': email,
+                            'phone': phone
+                        },
+                        success: function(data) {
+                            if (data.status == 1) {
+                                if (document.querySelector('.alert').classList.contains('alert-danger')) {
+                                    document.querySelector('.alert').classList.remove('alert-danger');
+                                }
+                                if (!document.querySelector('.alert').classList.contains('alert-success')) {
+                                    document.querySelector('.alert').classList.add('alert-success');
+                                }
+                                document.querySelector('.alert strong').innerHTML = data.msg;
+                            } else {
+                                if (document.querySelector('.alert').classList.contains('alert-success')) {
+                                    document.querySelector('.alert').classList.remove('alert-success');
+                                }
+                                if (!document.querySelector('.alert').classList.contains('alert-danger')) {
+                                    document.querySelector('.alert').classList.add('alert-danger');
+                                }
+                                document.querySelector('.alert strong').innerHTML = data.msg;
+                            }
                         }
-                    }
-                })
+                    })
+                }
             })
         });
     </script>

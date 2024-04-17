@@ -91,8 +91,7 @@ if (empty($_SESSION['username'])) {
                             <th scope="col">Mã dơn hàng</th>
                             <th scope="col">Tổng tiền</th>
                             <th scope="col">Tên người nhận</th>
-                            <th scope="col">Địa chỉ</th>
-                            <th scope="col">Phone</th>
+                            <th scope="col">Ngày đặt hàng</th>
                             <th scope="col">Xem chi tiết</th>
                         </tr>
                     </thead>
@@ -100,11 +99,6 @@ if (empty($_SESSION['username'])) {
                         <?php
                         $username = $_SESSION['username'];
                         $id = getRows('SELECT * FROM users WHERE username = :username', ['username' => $username])[0]['id'];
-                        $orderDetails = getRows('SELECT orders.*, product.title, carts.quantity, carts.dongia
-                                            FROM orders, carts, product
-                                            WHERE orders.id = carts.idOrder and 
-                                                carts.idProduct = product.id and 
-                                                idUser = :id', ['id' => $id]);
                         $orders = getRows('SELECT * FROM orders WHERE idUser = :id', ['id' => $id]);
                         foreach ($orders as $order) {
                         ?>
@@ -112,8 +106,7 @@ if (empty($_SESSION['username'])) {
                                 <th scope="row"><?= $order['maDH'] ?></th>
                                 <td><?= number_format($order['tongDH']) ?> VNĐ</td>
                                 <td><?= $order['name'] ?></td>
-                                <td><?= $order['address'] ?></td>
-                                <td><?= $order['phone'] ?></td>
+                                <td><?= $order['orderDate'] ?></td>
                                 <td><span class="jsDetail" data-id="<?= $order['id'] ?>">Chi tiết</span></td>
                             </tr>
                         <?php } ?>

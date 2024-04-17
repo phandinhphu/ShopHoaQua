@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ];
 
     $emailDB = getRow('SELECT * FROM users WHERE email = :email', $dataEmail);
-    
+
     if (count($emailDB) == 0) {
         $error['email'] = 'Email không tồn tại';
     }
@@ -37,10 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error['login'] = 'Đăng nhập thất bại';
     }
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="./modules/client/assets/css/base.css">
     <link rel="stylesheet" href="./modules/client/assets/css/login_register.css">
 </head>
+
 <body>
     <form action="?module=client&action=login" method="post">
         <div class="container">
@@ -59,11 +61,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h2>Đăng Nhập</h2>
                     <?php if (!empty($error['login'])) { ?>
                         <div class="alert alert-danger" role="alert">
-                            <?php echo $error['login']; ?>
+                            <?= $error['login']; ?>
                         </div>
                     <?php } ?>
+
+                    <?php if (!empty($_SESSION['flash_success'])) { ?>
+                        <div class="alert alert-success" role="alert">
+                            <?= getFlashData('success') ?>
+                        </div>
+                    <?php } ?>
+
                     <div class="form-group">
-                        <input type="email" name="email" class="input__text" id="email">
+                        <input type="email" name="email" class="input__text" id="email" required>
                         <label class="input__label" for="email">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                             Email:
@@ -73,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php } ?>
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="input__text" id="pwd">
+                        <input type="password" name="password" class="input__text" id="pwd" required>
                         <label class="input__label" for="pwd">
                             <i class="fa fa-lock" aria-hidden="true"></i>
                             Mật Khẩu:
@@ -83,8 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php } ?>
                     </div>
                     <div class="form-group text-right">
-                        <a href="?module=client&action=register">Đăng ký</a>
-                        <a href="?module=client&action=forgot.php">Quên mật khẩu?</a>
+                        <a class="form__link" href="?module=client&action=register">Đăng ký</a>
+                        <a class="form__link" href="?module=client&action=forgot.php">Quên mật khẩu?</a>
                     </div>
                     <button type="submit" class="btn btn-primary">Đăng Nhập</button>
                 </div>
@@ -92,19 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </form>
 
-    <script>
-        var inputLabels = document.querySelectorAll('.input__label');
-        var inputTexts = document.querySelectorAll('.input__text');
-        inputTexts.forEach((inputText, index) => {
-            inputText.addEventListener('focus', () => {
-                inputLabels[index].classList.add('active');
-            });
-            inputText.addEventListener('blur', () => {
-                if (inputText.value === '') {
-                    inputLabels[index].classList.remove('active');
-                }
-            });
-        });
-    </script>
+    <script src="./modules/client/assets/js/login_register.js"></script>
 </body>
+
 </html>

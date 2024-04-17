@@ -13,13 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $phone = $_POST['phone'];
     $data = [
         'email' => $email,
-        'phone' => $phone
+        'phone' => $phone,
+        'updatedAt' => date('Y-m-d H:i:s')
     ];
     $where = [
         'username' => $username
     ];
     $rs = update('users', $data, $where);
-    if ($rs) {
+    if ($rs == NULL) {
         $status = '1';
         $message = 'Cập nhật thông tin thành công';
     } else {
@@ -29,6 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('Content-Type: application/json');
     echo json_encode([
         'status' => $status,
-        'message' => $message
+        'msg' => $message
     ]);
 }

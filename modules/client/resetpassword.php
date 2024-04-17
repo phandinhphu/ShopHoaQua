@@ -9,7 +9,11 @@
         <div class="card-body">
             <form id="form-reset">
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="old-password">Nhập password cũ</label>
+                    <input type="password" name="old-password" id="old-password" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password">Nhập password mới</label>
                     <input type="password" name="password" id="password" class="form-control">
                 </div>
                 <div class="form-group">

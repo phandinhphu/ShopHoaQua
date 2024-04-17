@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $phone = $_POST['phone'];
         $address = $_POST['address'];
         $phuongThucTT = $_POST['payment'];
-        $maDH = "WCMS".rand(0, 999999);
+        $maDH = "WCMS".rand(0, 9999999);
 
         $idDH = taoDonHang($maDH, $total, $phuongThucTT, $name, $address, $email, $phone);
 
