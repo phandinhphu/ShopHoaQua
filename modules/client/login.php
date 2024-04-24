@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <div class="form-group text-right">
                         <a class="form__link" href="?module=client&action=register">Đăng ký</a>
-                        <a class="form__link" href="?module=client&action=forgot.php">Quên mật khẩu?</a>
+                        <a class="form__link" href="?module=client&action=forgot">Quên mật khẩu?</a>
                     </div>
                     <button type="submit" class="btn btn-primary">Đăng Nhập</button>
                 </div>
